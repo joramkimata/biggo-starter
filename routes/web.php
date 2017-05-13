@@ -18,6 +18,10 @@ Route::get('/', function () {
 
 })->name('login');
 
+Route::get('app/redirectLogin', function(){
+		return redirect()->to('/')->with('success', 'You can now login!');
+})->name('app.redirectLogin');
+
 Route::get('app/systemInt', function(){
 
 	try{

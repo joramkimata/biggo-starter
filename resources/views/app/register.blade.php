@@ -84,7 +84,7 @@
                     <div class="col-xs-12">
                         <button id="register" style="background-color: #0c6d40; color: white" class="btn btn-block btn-custom waves-effect waves-light w-md" type="button">Register</button>
                     </div>
-                    @include('partials._saveFunc', ["btnID" => "register", "formID"=>"register_form", "route"=>"app.doRegister", "routeWith"=>"app.refresh"])
+                    @include('partials._saveFunc', ["btnID" => "register", "formID"=>"register_form", "route"=>"app.doRegister", "routeWith"=>"app.redirectLogin"])
                 </div>
 
                 <div class="form-group m-t-30">

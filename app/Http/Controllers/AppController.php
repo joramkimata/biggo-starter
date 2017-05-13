@@ -14,7 +14,7 @@ class AppController extends Controller
         $password = request('password');
         $crx      = ['username'=>$username, 'password'=>$password, 'active'=>1];
         if(auth()->attempt($crx)){
-            return redirect()->intented('dashboard');
+            return redirect()->to('dashboard');
         }else{
             return redirect()->back()->with('error', 'Invalid User Information');
         }
@@ -22,7 +22,7 @@ class AppController extends Controller
 
     public function logout(){
         auth()->logout();
-        return redirect()->intented('/')->with('success', 'Successfully Logout!');
+        return redirect()->to('/')->with('success', 'Successfully Logout!');
     }
 
     public function registerAdmin(){
