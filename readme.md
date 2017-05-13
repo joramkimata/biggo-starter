@@ -1,14 +1,4 @@
-## Composer Install or Update
-- Each Time you clone the repo make sure you do composer install or composer update
-```
-$>composer install 
-```
-or 
-```
-$>composer update
-```
+## Todo List
+-- Create Role for admin and make it system role and undeleted
+-- Create Permissions for admin and make them system permissions and undeleted
 
-## Database Migration
-
- ```
- $> php artisan migrate
