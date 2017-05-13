@@ -1,0 +1,2 @@
+<button type="{{isset($type) ? $type : 'button' }}" class="btn btn-{{isset($btn) ? $btn : 'primary'}}"
+ id="{{isset($btnId) ? $btnId : ''}}"><i class="fa fa-{{isset($fa) ? $fa : 'save'}}"></i> {{isset($title) ? $title : 'Save'}}</button>
