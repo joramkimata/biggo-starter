@@ -5,14 +5,35 @@ use App\Systemsetting;
 
 
 Route::get('/', function () {
-    
-    if(Systemsetting::count()){
-    	return view('login');
-    }else{
-    	return view('bootApp');
+    try{
+	    if(Systemsetting::count()){
+	    	return view('login');
+	    }else{
+	    	return view('bootApp');
+	    }
+    }catch(Exception $x){
+    	return view('installApp');
     }
+  
 
 })->name('login');
+
+Route::get('app/systemInt', function(){
+
+	try{
+		Artisan::call('migrate');
+	}catch(Exception $x){
+		return 2;
+	}
+
+	try{
+		dd(DB::table('users')->count());
+	}catch(Exception $xx){
+		return 1;
+	}
+
+	
+})->name('app.systemInt');
 
 Route::post('app/doLogin', 'AppController@doLogin')->name('app.doLogin');
 Route::get('app/registerAdmin', 'AppController@registerAdmin')->name('app.registerAdmin');
