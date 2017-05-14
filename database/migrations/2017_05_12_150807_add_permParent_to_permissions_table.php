@@ -13,7 +13,7 @@ class AddPermParentToPermissionsTable extends Migration
     public function up()
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table->integer('permParent');
+            $table->integer('permParent')->nullable();
         });
     }
 

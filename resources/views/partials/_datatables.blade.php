@@ -22,7 +22,15 @@ use App\HelperX;
       <tr>
         <th>#</th>
         @foreach($columns as $column)
-          <th>{{$column}}</th>
+          @if($column != "Actions")
+            <th>{{$column}}</th>
+          @else
+            @if(isset($perms) && !empty($perms))
+              @if(canAccess($perms['perm_name'], "Delete") or canAccess($perms['perm_name'], "Edit"))
+               <th>Actions</th>
+              @endif 
+            @endif
+          @endif
         @endforeach
       </tr>
 
@@ -58,24 +66,30 @@ use App\HelperX;
                       @endif
                   @endforeach
               @else
-				  
-				@if(isset($isTaggedHtml))	
+          
+        @if(isset($isTaggedHtml)) 
 
                 <td>{!!$d->$mapEl!!}</td>
 
-				@else
-			
-				<td>{{($d->$mapEl)}}</td>
-			
-				@endif
+        @else
+      
+        <td>{{($d->$mapEl)}}</td>
+      
+        @endif
 
-				
-				
+        
+        
               @endif
 
               @endif
             @endforeach
-            <td>{!!View::make("actions.tools")->withRowid($d->id)->withModal($md)!!}</td>
+
+            @if(isset($perms) && !empty($perms))
+              @if(canAccess($perms['perm_name'], "Delete") or canAccess($perms['perm_name'], "Edit"))
+                <td>{!!View::make("actions.tools")->withRowid($d->id)->withModal($md)->withPerms($perms)!!}</td>
+              @endif  
+            @endif
+
         </tr>
         <?php $i++; ?>
       @endforeach
@@ -102,7 +116,7 @@ use App\HelperX;
 
 <script type="text/javascript">
 $(function(){
-  $('.edit_row').on('click', function(){
+  $('body').on('click', '.edit_row',function(){
     var row_id = $(this).attr('rowid');
     
     $('.loader').show();
@@ -124,7 +138,7 @@ $(function(){
 
 
   });
-  $('.delete_row').on('click', function(){
+  $('body').on('click', '.delete_row',function(){
     var row_id = $(this).attr('rowid');
     
     

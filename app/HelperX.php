@@ -6,6 +6,83 @@ use App\Systemsetting;
 use App\User;
 
 class HelperX {
+
+    public static function createDeveloper(){
+        $new_role_check = Role::where('role_name', 'Developer')->count();
+        if(!$new_role_check){
+            $new_role = new Role;
+            $new_role->role_name = 'Developer';
+            $new_role->status = 1;
+            $new_role->save();
+
+            $np = 0;
+
+            $new_perm_check = Permission::where('perm_name', 'Configure')->count();
+            if(!$new_perm_check){
+                $new_perm = new Permission;
+                $new_perm->perm_name = 'Configure';
+                $new_perm->isparent  = 1;
+                $new_perm->status    = 1;
+                $new_perm->routename = 'configure.system';
+                $new_perm->faicon    = 'fa-wrench';
+                $new_perm->isnav     = 1;
+                $new_perm->detail    = 'Configure the system';
+                $new_perm->save();
+                $new_roleperm_check  = Rolepermission::where('role_id', $new_role->id)->where('permission_id', $new_perm->id)->count();
+                if(!$new_roleperm_check){
+                    $new_roleperm = new Rolepermission;
+                    $new_roleperm->role_id = $new_role->id;
+                    $new_roleperm->permission_id = $new_perm->id;
+                    $new_roleperm->save();
+                    $np = $new_perm->id;
+                }                
+            }
+            $new_perm_check2 = Permission::where('perm_name', 'Roles')->count();
+            if(!$new_perm_check2){
+                $new_perm2 = new Permission;
+                $new_perm2->perm_name  = 'Roles';
+                $new_perm2->isparent   = 0;
+                $new_perm2->status     = 1;
+                $new_perm2->routename  = 'configure.roles';
+                $new_perm2->faicon     = 'fa-lock';
+                $new_perm2->isnav      = 1;
+                $new_perm2->detail     = 'Manage Roles';
+                $new_perm2->permParent = $np;
+                $new_perm2->save();
+                $new_roleperm_check2  = Rolepermission::where('role_id', $new_role->id)->where('permission_id', $new_perm2->id)->count();
+                if(!$new_roleperm_check2){
+                    $new_roleperm2 = new Rolepermission;
+                    $new_roleperm2->role_id = $new_role->id;
+                    $new_roleperm2->permission_id = $new_perm2->id;
+                    $new_roleperm2->save();
+                }                
+            }
+            $new_perm_check3 = Permission::where('perm_name', 'Permissions')->count();
+            if(!$new_perm_check3){
+                $new_perm3 = new Permission;
+                $new_perm3->perm_name  = 'Permissions';
+                $new_perm3->isparent   = 0;
+                $new_perm3->status     = 1;
+                $new_perm3->routename  = 'configure.perms';
+                $new_perm3->faicon     = 'fa-key';
+                $new_perm3->isnav      = 1;
+                $new_perm3->detail     = 'Manage Permissions';
+                $new_perm3->permParent = $np;
+                $new_perm3->save();
+                $new_roleperm_check3  = Rolepermission::where('role_id', $new_role->id)->where('permission_id', $new_perm3->id)->count();
+                if(!$new_roleperm_check3){
+                    $new_roleperm3 = new Rolepermission;
+                    $new_roleperm3->role_id = $new_role->id;
+                    $new_roleperm3->permission_id = $new_perm3->id;
+                    $new_roleperm3->save();
+                }                
+            }
+
+
+        }
+        return $new_role->id;
+    }
+
      public static function activeRoute($route)
     {
 

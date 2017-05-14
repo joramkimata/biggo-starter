@@ -39,7 +39,7 @@
         <div class="wrapper-page">
 
             <div class="text-center" id="initFeedBack" style="display: none">
-                <h3 >Initiatizing System ....</h3>
+                <h3 ><img src="{{url('img/loader.gif')}}" /> Initiatizing System ....</h3>
                 <hr/>
             </div>
 
@@ -102,6 +102,7 @@
                                 $('#initFeedBack').hide();
                                 Biggo.showFeedBack('#initFeedBack', 'Make Sure, DB connection is working,<br/><br/><i>Tip: check your .env file</i>');
                             }else{
+                                $('#initFeedBack').hide();
                                 Biggo.showFeedBack('#initFeedBack', 'Successfully initialised!', false);
                                 setTimeout(function() {
                                     window.location = "";

@@ -6,6 +6,9 @@ use App\HelperX;
 use App\Systemsetting;
 use App\User;
 use Illuminate\Http\Request;
+use App\Role;
+use App\Permission;
+use App\Rolepermission;
 
 class AppController extends Controller
 {
@@ -92,21 +95,24 @@ class AppController extends Controller
         $check    = User::where('role', 1)->count();
         if($check){
             //update
+            $role_id = HelperX::createDeveloper();
             $u = User::where('role', 1)->first();
             $u->name = $fullname;
             $u->email = $email;
-            $u->role  = 1;
+            $u->role  = $role_id;
             $u->password = bcrypt($password);
             $u->username = $username;
             $u->save();
             return response()->json(['error'=>false, 'msg'=>'Successfully Updated!']);
                
         }else{
+            //create Role
+            $role_id = HelperX::createDeveloper();
             //create one
             $u = new User;
             $u->name = $fullname;
             $u->email = $email;
-            $u->role  = 1;
+            $u->role  = $role_id;
             $u->password = bcrypt($password);
             $u->username = $username;
             $u->save();
