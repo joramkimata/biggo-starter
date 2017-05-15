@@ -38,7 +38,7 @@ $rowId =  $user->id;
 		<select class="form-control validate[required]" data-errormessage-value-missing="Role is required!" id="role" name="role" data-prompt-position="bottomRight">
 			<option value="{{$user->role}}">{{\App\Role::find($user->role)->role_name}}</option>
 			<?php
-				$roles = App\Role::where('id', '!=', $user->role)->get();
+				$roles = App\Role::where('id', '!=', $user->role)->where('role_name', '!=', 'Developer')->get();
 			?>
 			<option value="">----------------------------------------------</option>
 			@foreach($roles as $role)

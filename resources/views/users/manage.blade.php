@@ -51,7 +51,7 @@
 								<label for="role">Role: </label>
 								<select class="form-control validate[required]" data-errormessage-value-missing="Role is required!" id="role" name="role" data-prompt-position="bottomRight">
 									<?php
-										$roles = App\Role::all();
+										$roles = App\Role::where('role_name', '!=', 'Developer')->get();
 									?>
 									<option value="">--Select Role Here--</option>
 									@foreach($roles as $role)
@@ -90,7 +90,7 @@
 					
 						<?php 
 						
-							$data = \App\User::orderBy('created_at', 'DESC')->where('username', '!=', 'admin')->get();
+							$data = \App\User::orderBy('created_at', 'DESC')->where('role', '!=', App\Role::where('role_name', '=', 'Developer')->first()->id)->get();
 							
 							//["name", "email", "mobile", "username", "status", "role"]
 							
@@ -112,7 +112,7 @@
 						?>
 					
 						@include('partials._success')
-						@include('partials._datatables', ["columns"=>["Full Name", "Email", "Mobile", "Username", "Status", "Role", "Actions"], "mapEls"=>["name", "email", "mobile", "username", "status", "role"], "data"=>$dxX, "modal"=>"normal", "url_edit"=>"users/edit", "url_delete" =>"users/delete", "refreshWix"=>"users.refreshWith"])
+						@include('partials._datatables', ["columns"=>["Full Name", "Email", "Mobile", "Username", "Status", "Role", "Actions"], "mapEls"=>["name", "email", "mobile", "username", "status", "role"], "data"=>$dxX, "modal"=>"normal", "url_edit"=>"users/edit", "url_delete" =>"users/delete", "refreshWix"=>"users.refreshWith", "perms"=>['perm_name'=>'Users']])
 
 					</div>
 					

@@ -122,7 +122,7 @@
 						@include('partials._success')
 						@include('partials._datatables', ["columns"=>["Permission", "Detail", "Type", "Parent Permission", "Route", "Icon", "Navigation Menu", "Status",  "Actions"],
 						"mapEls"=>["permission", "detail", "ptype", "pperm","routeName", "faicon", "navMenu", "status"],
-						"data"=>$dxX, "modal"=>"normal", "url_edit"=>"permissions/edit", "url_delete" =>"permissions/delete", "refreshWix"=>"permissions.refreshWith", "isTaggedHtml"=>true])
+						"data"=>$dxX, "modal"=>"normal", "url_edit"=>"permissions/edit", "url_delete" =>"permissions/delete", "refreshWix"=>"permissions.refreshWith", "isTaggedHtml"=>true, 'perms'=>['perm_name'=>'Roles']])
 
 					</div>
 					

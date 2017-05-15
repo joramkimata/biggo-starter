@@ -7,7 +7,7 @@
                         <?php
 
                             $user_id = auth()->user()->role;
-                            $perms = App\Rolepermission::where('role_id', $user_id)->get();
+                            $perms = App\Rolepermission::where('role_id', $user_id)->orderBy('id', 'DESC')->get();
                             
 
                         ?>
@@ -28,11 +28,11 @@
                                     $faicon     = $perm->faicon;
                                     $permParent = $perm->permParent;
                                     //dd($perm);
-                                    $childs =  App\Permission::where('permParent', $perm_id)->where('status', 1)->get();
+                                    $childs =  App\Permission::where('permParent', $perm_id)->where('status', 1)->where('isnav', 1)->get();
 
                                 ?>
                                 @if($perm->status == 1 && $perm->isnav == 1)
-            						
+                                    
                                         
                                         @if($isparent == 1)
                                             
@@ -41,15 +41,28 @@
                                                     <?php
                                                         $activeChildRoutes = [];
                                                         foreach($childs as $c){
-                                                            $activeChildRoutes[] = $c->routename;
+                                                            $arr = explode(".", $c->routename);
+
+                                                            if($arr[1] != "edit"){
+                                                                $chpid = $c->id;
+                                                                
+                                                                if(canUserAccess($chpid)){
+                                                                    $activeChildRoutes[] = $c->routename; 
+                                                                }     
+                                                            }
                                                         }
+                                                        //dd($activeChildRoutes);
                                                     ?>
+
+
 
                                                     <li class="has-submenu {{activeChildRoute($activeChildRoutes)}}" >
                                                        <a href="#"><i class="fa {{$faicon}}"></i>{{$perm->perm_name}} </a> 
                                                        <ul class="submenu">
                                                             @foreach($childs as $c)
+                                                                @if(canUserAccess($c->id))
                                                                 <li><a href="{{route($c->routename)}}"><i class="fa {{$c->faicon}}"></i> {{$c->perm_name}}</a></li>
+                                                                @endif
                                                             @endforeach
                                                         </ul>   
                                                     </li>

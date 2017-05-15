@@ -19,6 +19,32 @@ function activeRoute($route)
     }
 }
 
+function canUserAccess($pid){
+	$check = App\Rolepermission::where('permission_id', $pid)->where('role_id', auth()->user()->role)->count();
+	if($check){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function canAccess($permName, $slug){
+	$permName = $slug . " " . $permName; 
+	$perm_id  = App\Permission::where('perm_name', $permName)->count();
+	if($perm_id){
+		$pid   = App\Permission::where('perm_name', $permName)->first()->id;
+		$check = App\Rolepermission::where('permission_id', $pid)->where('role_id', auth()->user()->role)->count();
+		if($check){
+			return true;
+		}else{
+			return false;
+		} 
+		
+	}else{
+		return false;
+	}
+}
+
 function activeChildRoute($routes){
 	for ($i=0; $i < count($routes); $i++) { 
 		$currentRouteName = $routes[$i];

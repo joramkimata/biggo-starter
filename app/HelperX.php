@@ -78,6 +78,27 @@ class HelperX {
                 }                
             }
 
+             $new_perm_check4 = Permission::where('perm_name', 'Edit Permissions')->count();
+            if(!$new_perm_check4){
+                $new_perm4 = new Permission;
+                $new_perm4->perm_name  = 'Edit Permissions';
+                $new_perm4->isparent   = 0;
+                $new_perm4->status     = 1;
+                $new_perm4->routename  = 'permissions.edit';
+                $new_perm4->faicon     = 'fa-edit';
+                $new_perm4->isnav      = 0;
+                $new_perm4->detail     = 'Permissions Edit';
+                $new_perm4->permParent = $np;
+                $new_perm4->save();
+                $new_roleperm_check4  = Rolepermission::where('role_id', $new_role->id)->where('permission_id', $new_perm4->id)->count();
+                if(!$new_roleperm_check4){
+                    $new_roleperm4 = new Rolepermission;
+                    $new_roleperm4->role_id = $new_role->id;
+                    $new_roleperm4->permission_id = $new_perm4->id;
+                    $new_roleperm4->save();
+                }                
+            }
+
 
         }
         return $new_role->id;

@@ -75,7 +75,11 @@
 								$dx = [];
 								$dx['id']        = $d->id;
 								$dx['role_name'] = $d->role_name;
+								if(canAccess("Permissions", "Edit")){
 								$dx['perms']     = '<a data-toggle="modal" class="role_permissions" roleId="' .$d->id .'" href="#modal-idx">Permissions</a>';
+								}else{
+								$dx['perms'] = '<label class="label label-danger">NO</label>';
+								}
 								$dx['status']    = $d->status;
 								
 								
@@ -85,7 +89,7 @@
 						?>
 					
 						@include('partials._success')
-						@include('partials._datatables', ["columns"=>["Role Name", "Permissions", "Status", "Actions"], "mapEls"=>["role_name", "perms", "status"], "data"=>$dxX, "modal"=>"normal", "url_edit"=>"roles/edit", "url_delete" =>"roles/delete", "refreshWix"=>"roles.refreshWith", "isTaggedHtml"=>true])
+						@include('partials._datatables', ["columns"=>["Role Name", "Permissions", "Status", "Actions"], "mapEls"=>["role_name", "perms", "status"], "data"=>$dxX, "modal"=>"normal", "url_edit"=>"roles/edit", "url_delete" =>"roles/delete", "refreshWix"=>"roles.refreshWith", "isTaggedHtml"=>true, 'perms'=>['perm_name'=>'Roles']])
 
 					</div>
 					
